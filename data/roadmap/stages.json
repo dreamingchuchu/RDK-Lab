@@ -1,0 +1,196 @@
+{
+  "stages": [
+    {
+      "id": "stage-01",
+      "order": 1,
+      "title": "Platform Pre-research",
+      "description": "RDK X3/X5 嵌入式 AI 智算平台的前期调研与基础环境搭建，理解 BPU 架构与模型转换流程。",
+      "objective": "回答：RDK 平台的 BPU 架构如何工作？模型从 PyTorch 到 BPU 可执行需要经过哪些转换步骤？开发环境如何配置？",
+      "status": "active",
+      "startDate": "2026-09-15",
+      "targetDate": "2026-10-31",
+      "progress": 35,
+      "tasks": [
+        {
+          "id": "task-001",
+          "title": "阅读 RDK X3 官方文档与 BPU 架构白皮书",
+          "status": "completed",
+          "priority": "high",
+          "estimatedTime": "3 天",
+          "relatedStage": "stage-01",
+          "planAdjustment": {
+            "plannedDate": "2026-09-15",
+            "actualDate": "2026-09-17",
+            "deviation": "提前 1 天完成",
+            "reason": "文档结构清晰，阅读效率高于预期"
+          },
+          "isExample": true
+        },
+        {
+          "id": "task-002",
+          "title": "搭建 RDK X3 开发环境（Ubuntu + Docker + Horizon OS）",
+          "status": "active",
+          "priority": "high",
+          "estimatedTime": "5 天",
+          "relatedStage": "stage-01",
+          "planAdjustment": {
+            "plannedDate": "2026-09-20",
+            "actualDate": null,
+            "deviation": null,
+            "reason": null
+          },
+          "isExample": true
+        },
+        {
+          "id": "task-003",
+          "title": "跑通官方 Model Zoo 中的 YOLOv5 示例",
+          "status": "planned",
+          "priority": "medium",
+          "estimatedTime": "3 天",
+          "relatedStage": "stage-01",
+          "planAdjustment": {
+            "plannedDate": "2026-09-28",
+            "actualDate": null,
+            "deviation": null,
+            "reason": null
+          },
+          "isExample": true
+        }
+      ],
+      "exitCriteria": [
+        "能独立完成一次模型从 ONNX 到 BPU 可执行文件的转换",
+        "在 RDK X3 上成功运行至少一个官方示例模型",
+        "理解 INT8 量化对精度与推理速度的影响"
+      ],
+      "risks": [
+        {
+          "description": "RDK X3 与 X5 的 BPU 架构差异可能导致模型转换流程不通用",
+          "impact": "medium",
+          "mitigation": "优先以 X3 为主，X5 作为对比验证"
+        },
+        {
+          "description": "Docker 环境与宿主机 CUDA 版本冲突",
+          "impact": "low",
+          "mitigation": "使用官方推荐 Docker 镜像版本"
+        }
+      ],
+      "fallback": "若 RDK X3 环境搭建受阻，可先在 x86 主机上用 Horizon 模拟器完成模型转换流程学习，再迁移到板端。",
+      "notes": "本阶段是后续所有工作的基础，必须扎实完成环境搭建与基础概念理解。",
+      "relatedExperiments": ["exp-001"],
+      "relatedDecisions": ["DEC-002"],
+      "planAdjustment": {
+        "plannedDate": "2026-09-15",
+        "actualDate": null,
+        "deviation": null,
+        "reason": null
+      },
+      "isExample": true
+    },
+    {
+      "id": "stage-02",
+      "order": 2,
+      "title": "Model & Dataset",
+      "description": "选定目标检测模型架构与数据集，完成基础训练与评估流程。",
+      "objective": "回答：哪个 YOLO 版本在 RDK 上推理效率与精度平衡最优？数据集应如何选择与预处理？",
+      "status": "planned",
+      "startDate": "2026-11-01",
+      "targetDate": "2026-12-15",
+      "progress": 0,
+      "tasks": [
+        {
+          "id": "task-004",
+          "title": "对比 YOLOv5 / YOLOv8 / YOLOv10 在 COCO 上的精度与速度",
+          "status": "planned",
+          "priority": "high",
+          "estimatedTime": "7 天",
+          "relatedStage": "stage-02",
+          "planAdjustment": {
+            "plannedDate": "2026-11-01",
+            "actualDate": null,
+            "deviation": null,
+            "reason": null
+          },
+          "isExample": true
+        },
+        {
+          "id": "task-005",
+          "title": "确定数据集（待应用方向确定后细化）",
+          "status": "planned",
+          "priority": "high",
+          "estimatedTime": "待定",
+          "relatedStage": "stage-02",
+          "planAdjustment": {
+            "plannedDate": "2026-11-10",
+            "actualDate": null,
+            "deviation": null,
+            "reason": null
+          },
+          "isExample": true
+        }
+      ],
+      "exitCriteria": [
+        "选定主模型架构并记录选型理由",
+        "完成一次基线训练并在 x86 上评估 mAP",
+        "数据集标注与划分方案确定"
+      ],
+      "risks": [
+        {
+          "description": "应用方向未定导致数据集选择悬空",
+          "impact": "high",
+          "mitigation": "本阶段先以 COCO 通用数据集跑通流程，应用方向确定后再替换专用数据集"
+        }
+      ],
+      "fallback": "若专用数据集获取困难，可使用公开数据集（如 COCO/VOC）完成方法验证，应用层仅做概念演示。",
+      "notes": "数据集选择依赖应用方向决策（DEC-001），需与决策阶段协同。",
+      "relatedExperiments": [],
+      "relatedDecisions": ["DEC-001"],
+      "planAdjustment": {
+        "plannedDate": "2026-11-01",
+        "actualDate": null,
+        "deviation": null,
+        "reason": null
+      },
+      "isExample": true
+    },
+    {
+      "id": "stage-03",
+      "order": 3,
+      "title": "Application Selection",
+      "description": "在多个候选应用方向中确定最终应用场景，明确系统功能边界。",
+      "objective": "回答：在道路检测、工业缺陷检测、农业病虫害检测等候选中，哪个最适合作为毕业设计应用？选择依据是什么？",
+      "status": "planned",
+      "startDate": "2026-12-16",
+      "targetDate": "2027-01-10",
+      "progress": 0,
+      "tasks": [],
+      "exitCriteria": [
+        "形成应用方向决策记录（DEC-001），含候选对比与选择理由",
+        "所选方向在 RDK 平台具备可行性验证（至少一篇参考文献或预实验）",
+        "指导教师确认应用方向"
+      ],
+      "risks": [
+        {
+          "description": "候选方向均缺乏公开数据集，需自采数据",
+          "impact": "high",
+          "mitigation": "优先考虑有公开数据集的方向；若自采，限制数据规模至可标注量"
+        },
+        {
+          "description": "应用方向确定后可能发现 RDK 算力不足",
+          "impact": "medium",
+          "mitigation": "在决策前做算力预估，参考已有论文的 FLOPs 与 BPU 算力对比"
+        }
+      ],
+      "fallback": "若所有候选均不可行，回退至通用目标检测 demo + 性能基准测试，作为平台能力评估类毕业设计。",
+      "notes": "本阶段输出是后续模型实验与系统开发的前置条件，必须形成正式决策记录。",
+      "relatedExperiments": [],
+      "relatedDecisions": ["DEC-001"],
+      "planAdjustment": {
+        "plannedDate": "2026-12-16",
+        "actualDate": null,
+        "deviation": null,
+        "reason": null
+      },
+      "isExample": true
+    }
+  ]
+}

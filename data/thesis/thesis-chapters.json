@@ -1,0 +1,128 @@
+{
+  "chapters": [
+    {
+      "id": "ch-01",
+      "order": "01",
+      "title": "Introduction",
+      "progress": 10,
+      "status": "in-progress",
+      "tasks": [
+        "撰写研究背景与意义",
+        "明确研究问题与目标",
+        "概述论文结构"
+      ],
+      "requiredEvidence": [],
+      "relatedExperiments": [],
+      "notes": "背景部分可基于已读 RDK 文档撰写。"
+    },
+    {
+      "id": "ch-02",
+      "order": "02",
+      "title": "Related Work",
+      "progress": 5,
+      "status": "in-progress",
+      "tasks": [
+        "综述嵌入式 AI 推理平台",
+        "综述 YOLO 目标检测模型族",
+        "综述模型量化方法"
+      ],
+      "requiredEvidence": [
+        { "description": "至少 10 篇相关文献阅读笔记", "completed": false }
+      ],
+      "relatedExperiments": [],
+      "notes": "当前已读 3 篇，需补充至 10 篇以上。"
+    },
+    {
+      "id": "ch-03",
+      "order": "03",
+      "title": "System Design",
+      "progress": 0,
+      "status": "not-started",
+      "tasks": [
+        "系统总体架构设计",
+        "模块划分与接口定义",
+        "数据流设计"
+      ],
+      "requiredEvidence": [
+        { "description": "应用方向决策确定（DEC-001）", "completed": false }
+      ],
+      "relatedExperiments": [],
+      "notes": "依赖应用方向确定后才能细化系统设计。"
+    },
+    {
+      "id": "ch-04",
+      "order": "04",
+      "title": "Model",
+      "progress": 0,
+      "status": "not-started",
+      "tasks": [
+        "模型选型与理由",
+        "模型结构描述",
+        "训练配置与超参数"
+      ],
+      "requiredEvidence": [
+        { "description": "模型选型决策记录", "completed": false },
+        { "description": "基线训练实验", "completed": false }
+      ],
+      "relatedExperiments": [],
+      "notes": ""
+    },
+    {
+      "id": "ch-05",
+      "order": "05",
+      "title": "RDK Deployment",
+      "progress": 15,
+      "status": "in-progress",
+      "tasks": [
+        "模型转换流程描述",
+        "INT8 量化策略",
+        "BPU 算子适配方案"
+      ],
+      "requiredEvidence": [
+        { "description": "模型成功部署至 RDK 板端", "completed": false },
+        { "description": "量化前后精度对比实验", "completed": false }
+      ],
+      "relatedExperiments": ["exp-001"],
+      "notes": "已识别 BPU 算子兼容性问题，正在研究改造方案。"
+    },
+    {
+      "id": "ch-06",
+      "order": "06",
+      "title": "Experiments",
+      "progress": 20,
+      "status": "in-progress",
+      "tasks": [
+        "实验设计与评价指标",
+        "基线实验结果",
+        "模型对比实验",
+        "RDK 性能实验",
+        "应用场景验证实验"
+      ],
+      "requiredEvidence": [
+        { "description": "Baseline 实验", "completed": true, "relatedExperimentId": "exp-001" },
+        { "description": "Model comparison 实验", "completed": false },
+        { "description": "Resolution 实验", "completed": false },
+        { "description": "RDK performance 实验", "completed": false },
+        { "description": "Multi-stream 实验", "completed": false }
+      ],
+      "relatedExperiments": ["exp-001"],
+      "notes": "仅完成算子兼容性检查实验，核心性能实验待模型改造后进行。"
+    },
+    {
+      "id": "ch-07",
+      "order": "07",
+      "title": "Conclusion",
+      "progress": 0,
+      "status": "not-started",
+      "tasks": [
+        "总结研究成果",
+        "讨论局限与未来工作"
+      ],
+      "requiredEvidence": [
+        { "description": "全部实验章节完成", "completed": false }
+      ],
+      "relatedExperiments": [],
+      "notes": ""
+    }
+  ]
+}

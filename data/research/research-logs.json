@@ -1,0 +1,43 @@
+{
+  "logs": [
+    {
+      "id": "log-001",
+      "date": "2026-09-17",
+      "title": "RDK X3 BPU 架构初步理解",
+      "summary": "阅读 RDK X3 官方文档，理解 BPU（Brain Processing Unit）的架构特点与模型转换流程。BPU 针对 INT8 量化推理优化，需通过 Horizon 工具链将 ONNX 模型转换为 .bin 可执行文件。",
+      "tags": ["RDK", "BPU", "model-conversion", "INT8"],
+      "stage": "stage-01",
+      "relatedExperiments": [],
+      "relatedPapers": ["paper-001"],
+      "relatedIssues": [],
+      "content": "# 2026-09-17 RDK X3 BPU 架构初步理解\n\n## Today's Goal\n\n理解 RDK X3 的 BPU 架构与模型转换流程，为后续模型部署打下基础。\n\n## Planned Tasks\n\n- [x] 阅读 RDK X3 官方文档架构章节\n- [x] 理解 BPU 与 GPU 推理的差异\n- [ ] 跑通官方 model conversion 示例\n\n## What I Learned\n\n### Concept: BPU (Brain Processing Unit)\n\n**What is it?** BPU 是地平线（Horizon）自研的 AI 推理处理器，针对嵌入式端的深度学习推理专门优化。\n\n**Why does it matter?** 与通用 GPU 不同，BPU 针对低功耗、低延迟的边缘推理场景，通过 INT8 量化与算子融合实现高效推理。理解 BPU 架构是模型部署的前提。\n\n**How does it work?** BPU 接收量化后的 INT8 模型，通过硬件级并行执行卷积等算子。模型需经过：PyTorch → ONNX → 量化 → BPU 编译 → .bin 文件。\n\n**How is it related to my thesis?** 本毕业设计的核心是将目标检测模型部署到 RDK 平台，BPU 是推理执行的核心硬件，必须理解其工作原理与限制。\n\n**My own understanding:** BPU 类似于 NPU/TPU 的边缘端实现，关键约束是只支持 INT8 量化推理，这意味着模型精度会有损失，需要在精度与速度间权衡。\n\n## Practical Work\n\n**Environment:**\n- Hardware: RDK X3（4 TOPS BPU 算力）\n- OS: Ubuntu 22.04（宿主机）\n- Python: 3.8\n- SDK: Horizon OpenExplorer v1.3.6\n\n**Commands:**\n```bash\n# 查看 BPU 算力\ncat /proc/cpuinfo | grep bpu\n\n# 模型转换工具链\nhb_mapper checker --model-type onnx --march horizon_x3 --model model.onnx\n```\n\n## Problems\n\n**Symptom:** `hb_mapper` 命令未找到\n\n**Error:** `command not found: hb_mapper`\n\n**Attempts:**\n1. 检查 PATH 环境变量\n2. 重新运行 OpenExplorer 安装脚本\n\n**Root Cause:** Docker 容器未正确激活 OpenExplorer 环境\n\n**Solution:** 进入 Docker 容器后执行 `source /openexplorer/setup.sh`\n\n## What I Actually Understood\n\nBPU 的核心是 INT8 量化推理，模型转换流程是：PyTorch → ONNX → 量化校准 → BPU 编译 → 板端推理。量化是关键且会导致精度损失。\n\n## Unresolved Questions\n\n- INT8 量化对 YOLOv5 小目标检测精度的影响有多大？\n- BPU 不支持的算子如何处理（fallback 到 CPU？）\n\n## Impact on Thesis\n\n- **Technology route:** 确认需走 ONNX → 量化 → BPU 路线\n- **Application:** 待定（不影响本阶段）\n- **Model:** 需选择 BPU 友好的模型架构\n- **Experiment:** 需设计量化前后精度对比实验\n\n## Conclusion\n\nBPU 架构理解到位，模型转换流程清晰。下一步需实际跑通转换示例。\n\n## Next Step\n\n跑通官方 YOLOv5 模型转换示例，记录完整的转换命令与产物。",
+      "isExample": true
+    },
+    {
+      "id": "log-002",
+      "date": "2026-09-20",
+      "title": "开发环境搭建记录",
+      "summary": "记录 RDK X3 开发环境搭建过程，包括 Ubuntu 主机配置、Docker 容器启动、OpenExplorer SDK 安装与板端连接。",
+      "tags": ["RDK", "environment", "docker", "setup"],
+      "stage": "stage-01",
+      "relatedExperiments": [],
+      "relatedPapers": [],
+      "relatedIssues": ["issue-001"],
+      "content": "# 2026-09-20 开发环境搭建记录\n\n## Today's Goal\n\n完成 RDK X3 完整开发环境搭建，使宿主机与板端均可正常工作。\n\n## Planned Tasks\n\n- [x] Ubuntu 22.04 主机基础环境\n- [x] Docker 与 OpenExplorer 容器\n- [ ] 板端 SSH 连接与文件传输\n\n## Practical Work\n\n**Environment:**\n- Hardware: RDK X3 + USB 网线\n- OS: Ubuntu 22.04 LTS\n- Docker: 24.0\n\n**Commands:**\n```bash\n# 启动 OpenExplorer Docker 容器\ndocker run -it --rm \\\n  -v $(pwd):/workspace \\\n  openexplorer/ai_toolchain_horizon_x3:v1.3.6\n\n# 板端 SSH 连接（默认 IP 192.168.1.10）\nssh root@192.168.1.10\n```\n\n## Problems\n\n**Symptom:** 无法通过 SSH 连接板端\n\n详见 issue-001。\n\n## Conclusion\n\n宿主机环境就绪，板端连接问题待解决。\n\n## Next Step\n\n排查板端网络配置，建立稳定的 SSH 与文件传输通道。",
+      "isExample": true
+    },
+    {
+      "id": "log-003",
+      "date": "2026-09-25",
+      "title": "YOLOv5 模型转换流程初探",
+      "summary": "尝试将 YOLOv5s 模型从 PyTorch 导出为 ONNX，并使用 hb_mapper 进行 BPU 编译。记录转换过程中的算子支持性问题。",
+      "tags": ["YOLO", "ONNX", "model-conversion", "BPU"],
+      "stage": "stage-01",
+      "relatedExperiments": ["exp-001"],
+      "relatedPapers": ["paper-002"],
+      "relatedIssues": ["issue-002"],
+      "content": "# 2026-09-25 YOLOv5 模型转换流程初探\n\n## Today's Goal\n\n将 YOLOv5s 模型导出为 ONNX 并尝试 BPU 编译，识别算子兼容性问题。\n\n## Planned Tasks\n\n- [x] PyTorch → ONNX 导出\n- [x] ONNX 算子图检查\n- [ ] BPU 编译成功\n\n## Practical Work\n\n**Model:** YOLOv5s (v7.0)\n**Dataset:** COCO（预训练权重）\n\n**Commands:**\n```bash\n# 导出 ONNX\npython export.py --weights yolov5s.pt --include onnx --simplify\n\n# BPU 算子检查\nhb_mapper checker --model-type onnx \\\n  --march horizon_x3 \\\n  --model yolov5s.onnx\n```\n\n**Results:**\n\n| 算子 | BPU 支持 | 备注 |\n|------|---------|------|\n| Conv2d | ✓ | 支持 INT8 |\n| Resize | ✓ | 需指定 mode |\n| Mul | ✗ | 需替换为量化友好算子 |\n| Sigmoid | ✗ | BPU 不直接支持 |\n\n## Problems\n\n**Symptom:** BPU 编译报错，Mul 与 Sigmoid 算子不支持\n\n详见 issue-002。\n\n## Impact on Thesis\n\n- **Model:** YOLOv5 的 Detect 层需改造为 BPU 友好版本\n- **Experiment:** 需对比改造前后精度差异\n\n## Conclusion\n\nYOLOv5 原生模型无法直接部署到 BPU，需对 Detect 层进行算子替换改造。\n\n## Next Step\n\n研究 YOLOv5 Detect 层的 BPU 友好改造方案，参考地平线官方适配示例。",
+      "isExample": true
+    }
+  ]
+}

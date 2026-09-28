@@ -1,0 +1,3 @@
+/** @type {import('next').NextConfig} */
+// 占位文件，实际配置在 next.config.ts
+export {};

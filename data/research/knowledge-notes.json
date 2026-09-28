@@ -1,0 +1,49 @@
+{
+  "notes": [
+    {
+      "id": "kn-001",
+      "category": "RDK",
+      "subcategory": "BPU",
+      "title": "BPU 推理流程",
+      "what": "BPU（Brain Processing Unit）是地平线自研的边缘 AI 推理处理器，针对 INT8 量化模型优化，通过硬件并行执行卷积等算子实现低功耗低延迟推理。",
+      "why": "BPU 是 RDK 平台模型部署的目标硬件，理解其工作原理与算子限制是模型成功部署的前提。与 GPU 推理不同，BPU 只支持量化后的 INT8 模型，且算子支持列表有限。",
+      "how": "模型部署流程：1) PyTorch 训练 → 2) 导出 ONNX → 3) 量化校准（PTQ）→ 4) BPU 编译（hb_mapper）→ 5) 板端推理（.bin 文件）。关键工具为 Horizon OpenExplorer 工具链。",
+      "example": "```bash\n# BPU 编译命令\nhb_mapper maker --model-type onnx \\\n  --march horizon_x3 \\\n  --model yolov5s.onnx \\\n  --output-dir ./output\n```",
+      "inThisProject": "本毕业设计的所有模型最终都需通过此流程部署到 RDK X3 的 BPU 上执行推理。",
+      "myUnderstanding": "BPU 的核心约束是 INT8 量化与有限算子支持。这意味着：1) 模型精度会有损失，需设计量化感知训练或校准策略；2) 模型中的非常规算子（如 Sigmoid、自定义层）需替换或改造为 BPU 友好版本。",
+      "relatedPapers": ["paper-001"],
+      "relatedExperiments": ["exp-001"],
+      "isExample": true
+    },
+    {
+      "id": "kn-002",
+      "category": "Object Detection",
+      "subcategory": "YOLO",
+      "title": "YOLO 目标检测模型族",
+      "what": "YOLO（You Only Look Once）是单阶段目标检测模型族，将检测视为回归问题，一次前向推理输出所有边界框与类别。代表版本有 YOLOv5、YOLOv8、YOLOv10 等。",
+      "why": "YOLO 在速度与精度间取得良好平衡，是边缘部署的主流选择。本毕业设计需在 YOLO 各版本中选型，评估其在 BPU 上的推理效率与精度。",
+      "how": "YOLO 架构：Backbone（特征提取）+ Neck（特征融合，如 PANet/FPN）+ Head（检测头，输出边界框与类别）。单阶段意味着无 RPN 区域提议步骤，直接回归。",
+      "example": "YOLOv5s 模型规模：\n- 参数量：7.2M\n- FLOPs：16.5 GFLOPs\n- COCO mAP@0.5：0.747（官方数据）",
+      "inThisProject": "候选主模型为 YOLOv5s / YOLOv8s，需对比其在 BPU 上的推理速度与量化后精度。",
+      "myUnderstanding": "YOLO 的单阶段特性使其适合边缘部署，但 Detect 层的 Sigmoid/Mul 等算子可能与 BPU 不兼容，需进行算子改造。模型选型需综合考虑：精度、速度、参数量、BPU 算子兼容性。",
+      "relatedPapers": ["paper-002"],
+      "relatedExperiments": [],
+      "isExample": true
+    },
+    {
+      "id": "kn-003",
+      "category": "Deployment",
+      "subcategory": "INT8",
+      "title": "INT8 量化与精度损失",
+      "what": "INT8 量化是将模型权重与激活从 FP32 映射到 INT8（-128~127）的过程，通过 scale 与 zero_point 参数保持数值范围。分为训练后量化（PTQ）与量化感知训练（QAT）两种。",
+      "why": "BPU 仅支持 INT8 推理，量化是部署的必经步骤。量化会引入精度损失，需评估并控制在可接受范围内。理解量化原理有助于选择合适的量化策略与校准数据集。",
+      "how": "PTQ 流程：1) 准备校准数据集（代表性输入样本）→ 2) 运行量化工具（hb_mapper）→ 3) 量化工具统计各层激活分布并计算最优 scale → 4) 生成量化后 INT8 模型。QAT 则在训练中模拟量化噪声。",
+      "example": "```python\n# PTQ 量化配置（伪代码）\nquant_config = {\n    'calibration_data': './calib_images/',\n    'quantize_method': 'PTQ',\n    'precision': 'INT8'\n}\n```",
+      "inThisProject": "本毕业设计采用 PTQ 流程对 YOLO 模型进行量化，需设计量化前后精度对比实验，评估 mAP 损失。",
+      "myUnderstanding": "PTQ 简单但精度损失可能较大，QAT 精度更好但需重新训练。对边缘部署，通常先尝试 PTQ，若精度损失超阈值（如 mAP 下降 >2%）再考虑 QAT。校准数据集的选择对 PTQ 精度影响显著。",
+      "relatedPapers": ["paper-003"],
+      "relatedExperiments": [],
+      "isExample": true
+    }
+  ]
+}

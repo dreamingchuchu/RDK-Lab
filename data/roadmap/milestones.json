@@ -1,0 +1,79 @@
+{
+  "milestones": [
+    {
+      "id": "ms-01",
+      "order": 1,
+      "title": "Platform Pre-research",
+      "description": "完成 RDK 平台环境搭建与基础概念理解",
+      "targetDate": "2026-10-31",
+      "status": "at-risk",
+      "relatedStageId": "stage-01",
+      "isExample": true
+    },
+    {
+      "id": "ms-02",
+      "order": 2,
+      "title": "Model & Dataset",
+      "description": "选定模型与数据集，完成基线训练",
+      "targetDate": "2026-12-15",
+      "status": "planned",
+      "relatedStageId": "stage-02",
+      "isExample": true
+    },
+    {
+      "id": "ms-03",
+      "order": 3,
+      "title": "Application Selection",
+      "description": "确定最终应用方向",
+      "targetDate": "2027-01-10",
+      "status": "planned",
+      "relatedStageId": "stage-03",
+      "isExample": true
+    },
+    {
+      "id": "ms-04",
+      "order": 4,
+      "title": "Model Experiments",
+      "description": "完成模型训练、量化、转换实验",
+      "targetDate": "2027-02-15",
+      "status": "planned",
+      "isExample": true
+    },
+    {
+      "id": "ms-05",
+      "order": 5,
+      "title": "RDK Deployment",
+      "description": "模型部署至 RDK 板端，完成推理验证",
+      "targetDate": "2027-03-15",
+      "status": "planned",
+      "isExample": true
+    },
+    {
+      "id": "ms-06",
+      "order": 6,
+      "title": "System Development",
+      "description": "开发图片/视频/摄像头检测应用",
+      "targetDate": "2027-04-10",
+      "status": "planned",
+      "isExample": true
+    },
+    {
+      "id": "ms-07",
+      "order": 7,
+      "title": "Thesis",
+      "description": "完成毕业论文撰写",
+      "targetDate": "2027-05-10",
+      "status": "planned",
+      "isExample": true
+    },
+    {
+      "id": "ms-08",
+      "order": 8,
+      "title": "Defense",
+      "description": "毕业答辩",
+      "targetDate": "2027-05-20",
+      "status": "planned",
+      "isExample": true
+    }
+  ]
+}

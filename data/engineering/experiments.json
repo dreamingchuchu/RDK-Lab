@@ -1,0 +1,66 @@
+{
+  "experiments": [
+    {
+      "id": "exp-001",
+      "title": "YOLOv5s ONNX 导出与 BPU 算子兼容性检查",
+      "date": "2026-09-25",
+      "status": "completed",
+      "objective": "验证 YOLOv5s 模型能否直接通过 BPU 编译，识别不支持的算子。",
+      "hypothesis": "YOLOv5s 的标准 Detect 层包含 Sigmoid 与 Mul 算子，预期 BPU 不直接支持，需改造。",
+      "hardware": "x86 主机（Docker OpenExplorer 容器）",
+      "softwareEnvironment": "Ubuntu 22.04, Python 3.8, Horizon OpenExplorer v1.3.6",
+      "model": "YOLOv5s v7.0（COCO 预训练）",
+      "dataset": "COCO 128 类（仅用于算子检查，未实际推理）",
+      "configuration": "标准导出配置，opset 11，simplify 开启",
+      "variables": "模型版本: YOLOv5s; opset: 11; simplify: true",
+      "metrics": {
+        "fps": null,
+        "latency": null,
+        "map": null,
+        "precision": null,
+        "recall": null,
+        "cpuUsage": null,
+        "memory": null,
+        "bpuUsage": null,
+        "modelSize": null
+      },
+      "results": "BPU 算子检查结果：\n\n| 算子 | BPU 支持 | 备注 |\n|------|---------|------|\n| Conv2d | 支持 | INT8 量化 |\n| BatchNorm | 支持 | 折叠到 Conv |\n| Resize | 支持 | 需指定 mode |\n| Concat | 支持 | 通道维拼接 |\n| Mul | 不支持 | 需替换 |\n| Sigmoid | 不支持 | 需替换为查表或近似 |\n\n结论：YOLOv5s 原生模型无法直接 BPU 编译，Detect 层需改造。",
+      "conclusion": "YOLOv5s 的 Detect 层中的 Mul 与 Sigmoid 算子不被 BPU 支持，需参考地平线官方适配方案对 Detect 层进行算子替换改造。这是模型部署的关键阻塞点。",
+      "reproducibility": "可在 Docker 容器中复现：1) 克隆 YOLOv5 仓库；2) python export.py --weights yolov5s.pt --include onnx --simplify；3) hb_mapper checker --model-type onnx --march horizon_x3 --model yolov5s.onnx。",
+      "relatedIssues": ["issue-002"],
+      "relatedDecisions": [],
+      "isExample": true
+    },
+    {
+      "id": "exp-002",
+      "title": "YOLOv5s BPU 友好改造版导出（待执行）",
+      "date": "2026-10-05",
+      "status": "planned",
+      "objective": "对 YOLOv5s Detect 层进行 BPU 友好改造（替换 Sigmoid/Mul），验证改造后模型能否通过 BPU 编译。",
+      "hypothesis": "将 Sigmoid 替换为查表近似、Mul 替换为量化友好算子后，BPU 编译应能通过，但精度可能略有下降。",
+      "hardware": "x86 主机 + RDK X3",
+      "softwareEnvironment": "Ubuntu 22.04, Python 3.8, Horizon OpenExplorer v1.3.6",
+      "model": "YOLOv5s 改造版",
+      "dataset": "待定（依赖应用方向决策 DEC-001）",
+      "configuration": "待定",
+      "variables": "待定",
+      "metrics": {
+        "fps": null,
+        "latency": null,
+        "map": null,
+        "precision": null,
+        "recall": null,
+        "cpuUsage": null,
+        "memory": null,
+        "bpuUsage": null,
+        "modelSize": null
+      },
+      "results": "",
+      "conclusion": "",
+      "reproducibility": "待实验执行后补充。",
+      "relatedIssues": [],
+      "relatedDecisions": ["DEC-001"],
+      "isExample": true
+    }
+  ]
+}

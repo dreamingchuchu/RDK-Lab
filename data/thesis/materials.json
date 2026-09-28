@@ -1,0 +1,88 @@
+{
+  "materials": [
+    {
+      "id": "mat-001",
+      "category": "dataset",
+      "title": "COCO 2017",
+      "url": "https://cocodataset.org",
+      "description": "通用目标检测数据集，80 类，用于基线训练与算子检查。",
+      "metadata": {
+        "classes": "80",
+        "images": "118287",
+        "size": "19GB"
+      }
+    },
+    {
+      "id": "mat-002",
+      "category": "dataset",
+      "title": "BDD100K",
+      "url": "https://bdd-data.berkeley.edu",
+      "description": "大规模多样化驾驶视频数据集，道路场景检测候选数据集。",
+      "metadata": {
+        "classes": "10",
+        "images": "100000",
+        "size": "7.1GB"
+      }
+    },
+    {
+      "id": "mat-003",
+      "category": "documentation",
+      "title": "RDK X3 官方文档",
+      "url": "https://developer.horizon.cc/api/horizon/api_x3",
+      "description": "RDK X3 平台开发文档，含 BPU 架构、模型转换工具链、API 参考。",
+      "metadata": {
+        "version": "v1.3.6",
+        "language": "中文/英文"
+      }
+    },
+    {
+      "id": "mat-004",
+      "category": "repository",
+      "title": "Horizon OpenExplorer",
+      "url": "https://github.com/HorizonRobotics/openexplorer",
+      "description": "地平线官方模型转换与部署工具链开源仓库。",
+      "metadata": {
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "mat-005",
+      "category": "repository",
+      "title": "YOLOv5",
+      "url": "https://github.com/ultralytics/yolov5",
+      "description": "Ultralytics YOLOv5 官方仓库，候选主模型。",
+      "metadata": {
+        "license": "AGPL-3.0",
+        "version": "v7.0"
+      }
+    },
+    {
+      "id": "mat-006",
+      "category": "paper",
+      "title": "本系统已收录论文",
+      "url": "/papers",
+      "description": "在 Papers 模块中管理的论文列表，含 3 篇示例论文。",
+      "metadata": {
+        "count": "3"
+      }
+    },
+    {
+      "id": "mat-007",
+      "category": "thesis_material",
+      "title": "毕业设计任务书",
+      "url": "",
+      "description": "学校下发的毕业设计任务书，待补充电子版。",
+      "metadata": {}
+    },
+    {
+      "id": "mat-008",
+      "category": "experiment_file",
+      "title": "实验记录与产物",
+      "url": "/experiments",
+      "description": "在 Experiments 模块中管理的实验记录，含命令、配置与结果。",
+      "metadata": {
+        "count": "2"
+      }
+    }
+  ]
+}

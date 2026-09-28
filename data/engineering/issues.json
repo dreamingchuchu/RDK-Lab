@@ -1,0 +1,40 @@
+{
+  "issues": [
+    {
+      "id": "issue-001",
+      "title": "无法通过 SSH 连接 RDK X3 板端",
+      "date": "2026-09-20",
+      "status": "resolved",
+      "severity": "medium",
+      "stage": "stage-01",
+      "environment": "Ubuntu 22.04 主机 + RDK X3（USB 网线连接）",
+      "symptom": "执行 ssh root@192.168.1.10 后超时，无任何响应。",
+      "errorMessage": "ssh: connect to host 192.168.1.10 port 22: Connection timed out",
+      "attempts": "1. 检查物理连接，网线指示灯正常\n2. 在主机执行 ping 192.168.1.10，无响应\n3. 检查主机网络接口，发现未给 USB 网卡分配同网段 IP\n4. 手动设置主机 USB 网卡 IP 为 192.168.1.100",
+      "hypothesis": "主机与板端不在同一子网，导致无法通信。",
+      "rootCause": "Ubuntu NetworkManager 默认通过 DHCP 获取 IP，但 RDK X3 板端无 DHCP 服务器，主机 USB 网卡未获得 192.168.1.x 网段地址。",
+      "solution": "手动为主机 USB 网卡配置静态 IP：\n```bash\nsudo ip addr add 192.168.1.100/24 dev enx<mac>\nsudo ip link set enx<mac> up\n```\n配置后 ssh root@192.168.1.10 可正常连接（默认密码 horizon）。",
+      "lesson": "边缘设备直连场景下，主机需手动配置同网段静态 IP，不能依赖 DHCP。后续可将此配置写入脚本自动化。",
+      "relatedExperiments": [],
+      "isExample": true
+    },
+    {
+      "id": "issue-002",
+      "title": "YOLOv5s BPU 编译失败：Mul 与 Sigmoid 算子不支持",
+      "date": "2026-09-25",
+      "status": "investigating",
+      "severity": "high",
+      "stage": "stage-01",
+      "environment": "Docker OpenExplorer v1.3.6 容器",
+      "symptom": "执行 hb_mapper maker 编译 YOLOv5s.onnx 时报错，提示不支持的算子。",
+      "errorMessage": "[ERROR] Unsupported op: Mul\n[ERROR] Unsupported op: Sigmoid\n[ERROR] Model conversion failed.",
+      "attempts": "1. 查阅 BPU 算子支持列表，确认 Mul 与 Sigmoid 确实不在支持范围\n2. 搜索地平线官方文档，找到 YOLOv5 适配示例\n3. 尝试理解官方示例的 Detect 层改造方案",
+      "hypothesis": "YOLOv5 的 Detect 层使用 Sigmoid 将 logits 转为概率，用 Mul 进行坐标缩放。这两个算子可分别替换为查表近似与量化友好乘法。",
+      "rootCause": "YOLOv5 Detect 层的设计未考虑 BPU 算子限制，Sigmoid 与 Mul 是 BPU 不支持的非常规算子。",
+      "solution": "待确认。初步方案：参考地平线官方 YOLOv5 适配仓库，将 Detect 层替换为 BPU 友好版本（去除 Sigmoid，坐标解码移到后处理）。",
+      "lesson": "模型选型时需提前检查 BPU 算子兼容性，避免在部署阶段才发现阻塞。后续应在选型阶段加入算子检查步骤。",
+      "relatedExperiments": ["exp-001"],
+      "isExample": true
+    }
+  ]
+}

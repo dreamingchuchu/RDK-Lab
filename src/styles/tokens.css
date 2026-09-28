@@ -1,0 +1,56 @@
+/* Design Tokens — Academic Laboratory × Linear × Notion
+ * 克制设计语言：warm off-white / dark gray / 细边框 / 微妙阴影 / 大量留白
+ */
+
+:root {
+  /* Light mode (default) */
+  --color-bg: #FAFAF7;            /* warm off-white */
+  --color-surface: #FFFFFF;       /* 卡片/侧边栏背景 */
+  --color-surface-hover: #F5F5F0; /* 悬停态 */
+  --color-text: #2D2D2D;          /* dark gray 排版 */
+  --color-text-secondary: #6B6B6B;
+  --color-text-tertiary: #9B9B9B;
+  --color-border: #E8E8E3;        /* 细边框 */
+  --color-accent: #5B6B8C;        /* 克制蓝灰强调色 */
+  --color-accent-soft: #E8ECF2;   /* 强调色浅底 */
+
+  /* 状态色（克制，不饱和） */
+  --color-status-planned: #8B8B8B;
+  --color-status-active: #5B6B8C;
+  --color-status-blocked: #B8704B;
+  --color-status-completed: #5B8C6B;
+  --color-status-cancelled: #9B9B9B;
+
+  /* 字体 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+    sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Menlo, Monaco,
+    'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  /* 圆角（克制） */
+  --radius: 4px;
+
+  /* 间距 */
+  --space-sidebar: 16rem;         /* 侧边栏宽度 */
+  --space-sidebar-collapsed: 3.5rem;
+}
+
+.dark {
+  /* Dark mode */
+  --color-bg: #1A1A1A;
+  --color-surface: #242424;
+  --color-surface-hover: #2D2D2D;
+  --color-text: #E5E5E5;
+  --color-text-secondary: #9B9B9B;
+  --color-text-tertiary: #6B6B6B;
+  --color-border: #333333;
+  --color-accent: #8B9BB8;
+  --color-accent-soft: #2A3040;
+
+  --color-status-planned: #6B6B6B;
+  --color-status-active: #8B9BB8;
+  --color-status-blocked: #D89B6B;
+  --color-status-completed: #8BB89B;
+  --color-status-cancelled: #6B6B6B;
+}

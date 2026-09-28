@@ -1,0 +1,50 @@
+{
+  "brand": {
+    "name": "RDK LAB",
+    "subtitle": "Graduation Project Research Log"
+  },
+  "groups": [
+    {
+      "id": "overview",
+      "label": "OVERVIEW",
+      "items": [
+        { "label": "Dashboard", "href": "/", "icon": "LayoutDashboard" }
+      ]
+    },
+    {
+      "id": "research",
+      "label": "RESEARCH",
+      "items": [
+        { "label": "Roadmap", "href": "/roadmap", "icon": "Map" },
+        { "label": "Research Log", "href": "/research-logs", "icon": "NotebookPen" },
+        { "label": "Papers", "href": "/papers", "icon": "FileText" },
+        { "label": "Knowledge", "href": "/knowledge", "icon": "BookOpen" }
+      ]
+    },
+    {
+      "id": "engineering",
+      "label": "ENGINEERING",
+      "items": [
+        { "label": "Experiments", "href": "/experiments", "icon": "FlaskConical" },
+        { "label": "Issues", "href": "/issues", "icon": "CircleAlert" },
+        { "label": "Decisions", "href": "/decisions", "icon": "GitBranch" }
+      ]
+    },
+    {
+      "id": "thesis",
+      "label": "THESIS",
+      "items": [
+        { "label": "Thesis Progress", "href": "/thesis-progress", "icon": "GraduationCap" },
+        { "label": "Materials", "href": "/materials", "icon": "FolderArchive" }
+      ]
+    },
+    {
+      "id": "system",
+      "label": "SYSTEM",
+      "items": [
+        { "label": "Search", "href": "/search", "icon": "Search" },
+        { "label": "About", "href": "/about", "icon": "Info" }
+      ]
+    }
+  ]
+}
