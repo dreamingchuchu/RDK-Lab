@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Experiment } from '@/types/experiment';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { Placeholder } from '@/components/common/Placeholder';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { MarkdownRenderer } from '@/components/common/MarkdownRenderer';
 import { MetricChart } from '@/components/charts/MetricChart';
 import { formatDate } from '@/lib/utils/dates';
@@ -31,6 +32,8 @@ export function ExperimentDetail({ experiment }: { experiment: Experiment }) {
         <h1 className="text-2xl font-semibold tracking-tight mb-2">{experiment.title}</h1>
         <p className="font-mono text-xs text-text-tertiary">{formatDate(experiment.date)}</p>
       </header>
+
+      {experiment.isExample && <ExampleBanner />}
 
       <section className="mb-8">
         <h2 className="section-title">Objective</h2>

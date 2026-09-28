@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { loadResearchLogs, loadResearchLogById } from '@/lib/loaders/research-logs';
 import { loadStages } from '@/lib/loaders/stages';
 import { MarkdownRenderer } from '@/components/common/MarkdownRenderer';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { formatDate } from '@/lib/utils/dates';
 
 export const metadata = { title: 'Log Detail — RDK Lab' };
@@ -43,6 +44,8 @@ export default function LogDetailPage({
           )}
         </div>
       </header>
+
+      {log.isExample && <ExampleBanner />}
 
       <MarkdownRenderer content={log.content} />
 

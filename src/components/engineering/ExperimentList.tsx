@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Experiment } from '@/types/experiment';
 import { StatusBadge } from '@/components/common/StatusBadge';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 import { formatDate } from '@/lib/utils/dates';
 
 export function ExperimentList({ experiments }: { experiments: Experiment[] }) {
@@ -26,6 +27,7 @@ export function ExperimentList({ experiments }: { experiments: Experiment[] }) {
                 <p className="text-xs text-text-tertiary font-mono">{formatDate(exp.date)}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
+                {exp.isExample && <ExampleBadge />}
                 <StatusBadge status={exp.status} />
                 <ArrowRight className="w-4 h-4 text-text-tertiary group-hover:text-accent transition-colors" />
               </div>

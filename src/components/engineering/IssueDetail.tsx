@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Issue } from '@/types/issue';
 import { StatusBadge, SeverityBadge } from '@/components/common/StatusBadge';
 import { Placeholder } from '@/components/common/Placeholder';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { MarkdownRenderer } from '@/components/common/MarkdownRenderer';
 import { formatDate } from '@/lib/utils/dates';
 
@@ -31,6 +32,8 @@ export function IssueDetail({ issue }: { issue: Issue }) {
         <h1 className="text-2xl font-semibold tracking-tight mb-2">{issue.title}</h1>
         <p className="font-mono text-xs text-text-tertiary">{formatDate(issue.date)}</p>
       </header>
+
+      {issue.isExample && <ExampleBanner />}
 
       <section className="mb-8">
         <h2 className="section-title">Full Chain</h2>

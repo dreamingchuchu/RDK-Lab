@@ -1,4 +1,5 @@
 import { ProjectHeader } from '@/components/dashboard/ProjectHeader';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { CurrentStage } from '@/components/dashboard/CurrentStage';
 import { CurrentFocus } from '@/components/dashboard/CurrentFocus';
 import { MilestoneTimeline } from '@/components/dashboard/MilestoneTimeline';
@@ -28,6 +29,7 @@ export default function DashboardPage() {
   return (
     <div>
       <ProjectHeader />
+      <ExampleBanner />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">

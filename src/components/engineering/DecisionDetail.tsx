@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Decision } from '@/types/decision';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { Placeholder } from '@/components/common/Placeholder';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { formatDate } from '@/lib/utils/dates';
 import { PLACEHOLDERS } from '@/lib/utils/placeholders';
 
@@ -19,6 +20,8 @@ export function DecisionDetail({ decision }: { decision: Decision }) {
         <h1 className="text-2xl font-semibold tracking-tight mb-2">{decision.title}</h1>
         <p className="font-mono text-xs text-text-tertiary">{formatDate(decision.date)}</p>
       </header>
+
+      {decision.isExample && <ExampleBanner />}
 
       <section className="mb-8">
         <h2 className="section-title">Context</h2>

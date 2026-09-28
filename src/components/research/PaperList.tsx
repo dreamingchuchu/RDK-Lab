@@ -2,6 +2,7 @@
 
 import type { Paper } from '@/types/paper';
 import { StatusBadge } from '@/components/common/StatusBadge';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 
 type PaperListProps = {
   papers: Paper[];
@@ -23,7 +24,10 @@ export function PaperList({ papers }: PaperListProps) {
                 {paper.authors.join(', ')} · {paper.year}
               </p>
             </div>
-            <StatusBadge status={paper.status} />
+            <div className="flex items-center gap-1.5">
+              {paper.isExample && <ExampleBadge />}
+              <StatusBadge status={paper.status} />
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs text-text-tertiary">
             {paper.model && <span className="tag">{paper.model}</span>}

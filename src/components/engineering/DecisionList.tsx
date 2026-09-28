@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Decision } from '@/types/decision';
 import { StatusBadge } from '@/components/common/StatusBadge';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 import { formatDate } from '@/lib/utils/dates';
 
 export function DecisionList({ decisions }: { decisions: Decision[] }) {
@@ -26,6 +27,7 @@ export function DecisionList({ decisions }: { decisions: Decision[] }) {
                 <p className="text-xs text-text-tertiary font-mono">{formatDate(dec.date)}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
+                {dec.isExample && <ExampleBadge />}
                 <StatusBadge status={dec.status} />
                 <ArrowRight className="w-4 h-4 text-text-tertiary group-hover:text-accent transition-colors" />
               </div>

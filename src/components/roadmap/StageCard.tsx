@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Stage } from '@/types/stage';
 import { StatusBadge } from '@/components/common/StatusBadge';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 import { formatDate } from '@/lib/utils/dates';
 
 export function StageCard({ stage }: { stage: Stage }) {
@@ -20,7 +21,10 @@ export function StageCard({ stage }: { stage: Stage }) {
             </span>
             <h3 className="text-base font-medium text-text truncate">{stage.title}</h3>
           </div>
-          <StatusBadge status={stage.status} />
+          <div className="flex items-center gap-1.5">
+            {stage.isExample && <ExampleBadge />}
+            <StatusBadge status={stage.status} />
+          </div>
         </div>
         <ArrowRight className="w-4 h-4 text-text-tertiary group-hover:text-accent transition-colors shrink-0" />
       </div>

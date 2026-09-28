@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { ResearchLog } from '@/types/research-log';
 import { formatDate } from '@/lib/utils/dates';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 
 export function LogCard({ log }: { log: ResearchLog }) {
   return (
@@ -12,9 +13,10 @@ export function LogCard({ log }: { log: ResearchLog }) {
         <span className="font-mono text-xs text-text-tertiary shrink-0">
           {formatDate(log.date)}
         </span>
-        <h3 className="text-sm font-medium text-text group-hover:text-accent transition-colors truncate">
+        <h3 className="text-sm font-medium text-text group-hover:text-accent transition-colors truncate flex-1">
           {log.title}
         </h3>
+        {log.isExample && <ExampleBadge />}
       </div>
       <p className="text-xs text-text-secondary line-clamp-2 mb-2 leading-relaxed">
         {log.summary}

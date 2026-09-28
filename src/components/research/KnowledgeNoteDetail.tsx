@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { KnowledgeNote } from '@/types/knowledge-note';
 import { Placeholder } from '@/components/common/Placeholder';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 import { PLACEHOLDERS, formatOptionalString } from '@/lib/utils/placeholders';
 
 export function KnowledgeNoteDetail({ note }: { note: KnowledgeNote }) {
@@ -20,6 +21,7 @@ export function KnowledgeNoteDetail({ note }: { note: KnowledgeNote }) {
           {note.category}{note.subcategory ? ` / ${note.subcategory}` : ''}
         </p>
         <h2 className="text-lg font-medium text-text">{note.title}</h2>
+        {note.isExample && <div className="mt-2"><ExampleBadge /></div>}
       </header>
 
       <dl className="space-y-5">

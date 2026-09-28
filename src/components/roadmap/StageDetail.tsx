@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Stage } from '@/types/stage';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import { Placeholder } from '@/components/common/Placeholder';
+import { ExampleBanner } from '@/components/common/ExampleBanner';
 import { TaskList } from './TaskList';
 import { PlanAdjustmentView } from './PlanAdjustmentView';
 import { formatDate } from '@/lib/utils/dates';
@@ -34,6 +35,8 @@ export function StageDetail({ stage, experimentIds, decisionIds }: StageDetailPr
           <span>进度 {stage.progress}%</span>
         </div>
       </header>
+
+      {stage.isExample && <ExampleBanner />}
 
       <section className="mb-8">
         <h2 className="section-title">Objective</h2>

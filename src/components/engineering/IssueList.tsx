@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { Issue } from '@/types/issue';
 import { StatusBadge, SeverityBadge } from '@/components/common/StatusBadge';
+import { ExampleBadge } from '@/components/common/ExampleBadge';
 import { formatDate } from '@/lib/utils/dates';
 
 export function IssueList({ issues }: { issues: Issue[] }) {
@@ -26,6 +27,7 @@ export function IssueList({ issues }: { issues: Issue[] }) {
                 <p className="text-xs text-text-tertiary font-mono">{formatDate(issue.date)}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
+                {issue.isExample && <ExampleBadge />}
                 <SeverityBadge severity={issue.severity} />
                 <StatusBadge status={issue.status} />
                 <ArrowRight className="w-4 h-4 text-text-tertiary group-hover:text-accent transition-colors" />
