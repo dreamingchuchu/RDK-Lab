@@ -11,3 +11,6 @@ export function loadPapers(): Paper[] {
     return [];
   }
 }
+export function loadPaperById(id: string): Paper | null {
+  return loadPapers().find((p) => p.id === id) ?? null;
+}

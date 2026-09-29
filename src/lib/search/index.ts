@@ -1,10 +1,12 @@
 import type { SearchResult, SearchResultType } from '@/types';
 import { loadResearchLogs } from '@/lib/loaders/research-logs';
 import { loadPapers } from '@/lib/loaders/papers';
+import { loadPaperAnalyses } from '@/lib/loaders/paper-analyses';
 import { loadKnowledgeNotes } from '@/lib/loaders/knowledge';
 import { loadExperiments } from '@/lib/loaders/experiments';
 import { loadIssues } from '@/lib/loaders/issues';
 import { loadDecisions } from '@/lib/loaders/decisions';
+import type { PaperAnalysis } from '@/types/paper-analysis';
 
 type SearchIndexEntry = {
   type: SearchResultType;
@@ -15,6 +17,32 @@ type SearchIndexEntry = {
 };
 
 let cachedIndex: SearchIndexEntry[] | null = null;
+
+function getAnalysisTitle(analysis: PaperAnalysis): string {
+  const paper = loadPapers().find((p) => p.id === analysis.paperId);
+  return paper ? `深度分析：${paper.title}` : '论文深度分析';
+}
+
+function getAnalysisSearchableText(analysis: PaperAnalysis): string {
+  const parts: string[] = [];
+  const obj = analysis as Record<string, unknown>;
+  for (const key of Object.keys(obj)) {
+    const value = obj[key];
+    if (typeof value === 'string') {
+      parts.push(value);
+    } else if (Array.isArray(value)) {
+      parts.push(value.join(' '));
+    } else if (value && typeof value === 'object') {
+      const nested = value as Record<string, unknown>;
+      for (const nestedKey of Object.keys(nested)) {
+        const nestedValue = nested[nestedKey];
+        if (typeof nestedValue === 'string') parts.push(nestedValue);
+        else if (Array.isArray(nestedValue)) parts.push(nestedValue.join(' '));
+      }
+    }
+  }
+  return parts.join(' ').toLowerCase();
+}
 
 export function buildSearchIndex(): SearchIndexEntry[] {
   if (cachedIndex) return cachedIndex;
@@ -38,6 +66,16 @@ export function buildSearchIndex(): SearchIndexEntry[] {
       title: paper.title,
       searchableText: [paper.title, paper.authors.join(' '), paper.topic, paper.model, paper.notes].join(' ').toLowerCase(),
       href: '/papers',
+    });
+  }
+
+  for (const analysis of loadPaperAnalyses()) {
+    entries.push({
+      type: 'paper_analysis',
+      id: analysis.id,
+      title: getAnalysisTitle(analysis),
+      searchableText: getAnalysisSearchableText(analysis),
+      href: `/papers/${analysis.paperId}`,
     });
   }
 
@@ -119,6 +157,7 @@ export function groupResults(results: SearchResult[]): Record<SearchResultType, 
   const groups: Record<SearchResultType, SearchResult[]> = {
     log: [],
     paper: [],
+    paper_analysis: [],
     knowledge: [],
     experiment: [],
     issue: [],

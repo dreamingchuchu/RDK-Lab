@@ -62,6 +62,26 @@
       "notes": "重点阅读训练后量化（PTQ）章节，BPU 部署使用 PTQ 流程。",
       "relatedDecisions": [],
       "isExample": true
+    },
+    {
+      "id": "paper-004",
+      "title": "基于深度学习的水果目标检测嵌入式系统的研究与实现",
+      "authors": ["李伟汉"],
+      "year": 2021,
+      "type": "master-thesis",
+      "university": "华南农业大学",
+      "source": "CNKI 硕士论文",
+      "url": "https://kns.cnki.net/reader/flowpdf?invoice=STTtMDvxOdktI7MrX2i92V3UziUIUFmDgPuL1d%2FqQA5fOHBuwWzMoIHFB8sF8FlG%2FSKV%2FNq%2BdcpbmAwbQqKfAQRLUOAej%2FHt1waUPX3zooNXKvgjvULWG%2B%2FE6XjqG0RGh8zsgwwrvIOrCBXk0uXPy%2FSeTRulIwfkEsepC5042Js%3D&platform=NZKPT&sourcetype=nxgp&product=CMFD&filename=1021878248.nh&tablename=cmfd202501&type=DISSERTATION&scope=trial&cflag=overlay&dflag=&pages=&language=CHS&trial=&nonce=678072E84A9E4C429BDF09C154222D2C",
+      "topic": "嵌入式目标检测",
+      "model": "改进 YOLOv4-Tiny (MobileNet-V3)",
+      "hardware": "Jetson Nano",
+      "dataset": "OFD-V1 (自建, 11123张)",
+      "methods": "YOLOv4-Tiny, MobileNet-V3, K-means Anchor, 二尺度检测, ONNX, TensorRT, INT8",
+      "results": "mAP=93.04%, FPS=25.51(PC), 32.24(Jetson Nano INT8+TensorRT), 参数量3.02M",
+      "relevance": "高度相关 — 嵌入式目标检测完整闭环，方法论直接参考",
+      "status": "read",
+      "notes": "深度阅读完成，21章节分析记录已创建。最大参考价值是\"数据→模型→实验→部署\"闭环方法论，而非具体技术方案。",
+      "relatedDecisions": []
     }
   ]
 }

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import type { Paper } from '@/types/paper';
 import { PaperList } from './PaperList';
 
-export function PaperFilters({ papers }: { papers: Paper[] }) {
+export function PaperFilters({ papers, analyzedPaperIds }: { papers: Paper[]; analyzedPaperIds: Set<string> }) {
   const [yearFilter, setYearFilter] = useState<string>('');
   const [modelFilter, setModelFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -68,7 +68,7 @@ export function PaperFilters({ papers }: { papers: Paper[] }) {
           共 {filtered.length} 篇
         </span>
       </div>
-      <PaperList papers={filtered} />
+      <PaperList papers={filtered} analyzedPaperIds={analyzedPaperIds} />
     </div>
   );
 }

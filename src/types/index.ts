@@ -87,11 +87,13 @@ export type { Decision } from './decision';
 export type { ThesisChapter } from './thesis-chapter';
 export type { Material } from './material';
 export type { NavigationConfig, NavigationGroup, NavigationItem } from './navigation';
+export type { PaperAnalysis, ChecklistItem, ReadingFinalStatus } from './paper-analysis';
 
 // === 搜索结果类型 ===
 export type SearchResultType =
   | 'log'
   | 'paper'
+  | 'paper_analysis'
   | 'knowledge'
   | 'experiment'
   | 'issue'

@@ -5,6 +5,7 @@ import { EmptyState } from './EmptyState';
 const typeLabels: Record<SearchResultType, string> = {
   log: 'Research Logs',
   paper: 'Papers',
+  paper_analysis: 'Paper Analyses',
   knowledge: 'Knowledge',
   experiment: 'Experiments',
   issue: 'Issues',
@@ -19,6 +20,7 @@ export function SearchResults({ results }: { results: SearchResult[] }) {
   const groups: Record<SearchResultType, SearchResult[]> = {
     log: [],
     paper: [],
+    paper_analysis: [],
     knowledge: [],
     experiment: [],
     issue: [],
@@ -28,7 +30,7 @@ export function SearchResults({ results }: { results: SearchResult[] }) {
     groups[r.type].push(r);
   }
 
-  const orderedTypes: SearchResultType[] = ['log', 'paper', 'knowledge', 'experiment', 'issue', 'decision'];
+  const orderedTypes: SearchResultType[] = ['log', 'paper', 'paper_analysis', 'knowledge', 'experiment', 'issue', 'decision'];
 
   return (
     <div className="space-y-6">
