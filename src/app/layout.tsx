@@ -43,7 +43,7 @@ export default function RootLayout({
           <header className="hidden md:flex items-center justify-end h-12 px-6 border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
             <ThemeToggle />
           </header>
-          <main className="px-4 md:px-8 py-6 md:py-8 max-w-content mx-auto pt-20 md:pt-8">
+          <main className="px-4 md:px-8 py-6 md:py-8 max-w-content pt-20 md:pt-8">
             {children}
           </main>
         </div>
