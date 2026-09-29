@@ -36,14 +36,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-bg text-text antialiased">
         <Sidebar config={navigation} />
-        <div className="md:pl-64">
+        <div className="md:pl-64 xl:pl-0">
           <div className="flex items-center justify-end h-14 px-4 border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-10 md:hidden">
             <ThemeToggle />
           </div>
           <header className="hidden md:flex items-center justify-end h-12 px-6 border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-10">
             <ThemeToggle />
           </header>
-          <main className="px-4 md:px-8 py-6 md:py-8 max-w-content pt-20 md:pt-8">
+          <main className="px-4 md:px-8 py-6 md:py-8 max-w-content mx-auto pt-20 md:pt-8">
             {children}
           </main>
         </div>
