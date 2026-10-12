@@ -27,7 +27,9 @@
       "results": "BPU 算子检查结果：\n\n| 算子 | BPU 支持 | 备注 |\n|------|---------|------|\n| Conv2d | 支持 | INT8 量化 |\n| BatchNorm | 支持 | 折叠到 Conv |\n| Resize | 支持 | 需指定 mode |\n| Concat | 支持 | 通道维拼接 |\n| Mul | 不支持 | 需替换 |\n| Sigmoid | 不支持 | 需替换为查表或近似 |\n\n结论：YOLOv5s 原生模型无法直接 BPU 编译，Detect 层需改造。",
       "conclusion": "YOLOv5s 的 Detect 层中的 Mul 与 Sigmoid 算子不被 BPU 支持，需参考地平线官方适配方案对 Detect 层进行算子替换改造。这是模型部署的关键阻塞点。",
       "reproducibility": "可在 Docker 容器中复现：1) 克隆 YOLOv5 仓库；2) python export.py --weights yolov5s.pt --include onnx --simplify；3) hb_mapper checker --model-type onnx --march horizon_x3 --model yolov5s.onnx。",
-      "relatedIssues": ["issue-002"],
+      "relatedIssues": [
+        "issue-002"
+      ],
       "relatedDecisions": [],
       "isExample": true
     },
@@ -59,8 +61,41 @@
       "conclusion": "",
       "reproducibility": "待实验执行后补充。",
       "relatedIssues": [],
-      "relatedDecisions": ["DEC-001"],
+      "relatedDecisions": [
+        "DEC-001"
+      ],
       "isExample": true
+    },
+    {
+      "id": "exp-003",
+      "title": "POP 数据集 YOLO11n 基线训练与验证",
+      "date": "2026-10-12",
+      "status": "completed",
+      "objective": "在 POP 人员检测数据集上完成 YOLO11n 基线训练，获取验证集评价指标，验证 PC 端训练与推理流程。",
+      "hypothesis": "YOLO11n 预训练权重在 POP 单类别（person）数据集上经 50 轮微调，应能达到 mAP@50 ≥ 0.8 的可用基线水平。",
+      "hardware": "Google Colab, NVIDIA Tesla T4",
+      "softwareEnvironment": "Python 3.13.15, PyTorch 2.11.0+cu130, Ultralytics 8.4.175",
+      "model": "YOLO11n（yolo11n.pt 预训练权重）",
+      "dataset": "POP 人员检测数据集（Train 5548 / Val 2320 / Test 900，单类别 person，640×640）",
+      "configuration": "epochs=50, imgsz=640, batch=16, device=0, workers=2, seed=42",
+      "variables": "model: YOLO11n; epochs: 50; imgsz: 640; batch: 16; seed: 42",
+      "metrics": {
+        "fps": null,
+        "latency": null,
+        "map": 0.845,
+        "precision": 0.909,
+        "recall": 0.793,
+        "cpuUsage": null,
+        "memory": null,
+        "bpuUsage": null,
+        "modelSize": null
+      },
+      "results": "训练耗时约 1.643 小时（50 epochs，Colab T4）。\n\n验证集指标（best.pt）：\n\n| 指标 | 结果 |\n|---|---:|\n| Precision | 0.909 |\n| Recall | 0.793 |\n| mAP@50 | 0.845 |\n| mAP@50–95 | 0.589 |\n\n单张验证图片推理检查（F14_0457_30.087.JPG）：\n- 预测人员 3 个，置信度 0.883 / 0.863 / 0.829\n- 真实标注 3 个\n- 逐框最高 IoU：0.840 / 0.873 / 0.859（均 > 0.8）\n- 注：采用逐框找最高 IoU 的简单检查，未做严格一对一匹配，仅为初步验证\n\n模型权重及实验文件已备份至 Google Drive：\n`/content/drive/MyDrive/RDK_experiment/pop_yolo11n_baseline`",
+      "conclusion": "PC 端 YOLO11n 基线实验完成初版，训练与推理流程跑通。Precision 0.909 高于 Recall 0.793，模型预测相对谨慎但存在漏检；mAP@50–95 0.589 明显低于 mAP@50 0.845，严格定位标准下仍有改进空间。单张图片预测框与真实标注 IoU 均 > 0.8，位置精度初步合格。后续需系统性对比实验、板端部署与性能测试；当前不认定过拟合，也不认定需修改网络结构。",
+      "reproducibility": "1. 在 Google Colab（T4 GPU）中配置 Python 3.13 + PyTorch 2.11 + Ultralytics 8.4.175 环境；\n2. 准备 POP 数据集并转为 YOLO 格式（Train 5548 / Val 2320 / Test 900，单类别 person，data.yaml）；\n3. from ultralytics import YOLO; model = YOLO(\"yolo11n.pt\");\n4. model.train(data=\".../data.yaml\", epochs=50, imgsz=640, batch=16, device=0, workers=2, seed=42);\n5. model.val() 获取验证集指标；\n6. 单张推理时注意 POP 验证集图片后缀为大写 .JPG，需用 p.suffix.lower() 统一判断扩展名。",
+      "relatedIssues": [],
+      "relatedDecisions": [],
+      "isExample": false
     }
   ]
 }

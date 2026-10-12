@@ -76,8 +76,12 @@
       ],
       "fallback": "若 RDK X3 环境搭建受阻，可先在 x86 主机上用 Horizon 模拟器完成模型转换流程学习，再迁移到板端。",
       "notes": "本阶段是后续所有工作的基础，必须扎实完成环境搭建与基础概念理解。",
-      "relatedExperiments": ["exp-001"],
-      "relatedDecisions": ["DEC-002"],
+      "relatedExperiments": [
+        "exp-001"
+      ],
+      "relatedDecisions": [
+        "DEC-002"
+      ],
       "planAdjustment": {
         "plannedDate": "2026-09-15",
         "actualDate": null,
@@ -92,10 +96,10 @@
       "title": "Model & Dataset",
       "description": "选定目标检测模型架构与数据集，完成基础训练与评估流程。",
       "objective": "回答：哪个 YOLO 版本在 RDK 上推理效率与精度平衡最优？数据集应如何选择与预处理？",
-      "status": "planned",
+      "status": "active",
       "startDate": "2026-11-01",
       "targetDate": "2026-12-15",
-      "progress": 0,
+      "progress": 30,
       "tasks": [
         {
           "id": "task-004",
@@ -143,12 +147,14 @@
       "fallback": "若专用数据集获取困难，可使用公开数据集（如 COCO/VOC）完成方法验证，应用层仅做概念演示。",
       "notes": "数据集选择依赖应用方向决策（DEC-001），需与决策阶段协同。",
       "relatedExperiments": [],
-      "relatedDecisions": ["DEC-001"],
+      "relatedDecisions": [
+        "DEC-001"
+      ],
       "planAdjustment": {
         "plannedDate": "2026-11-01",
-        "actualDate": null,
-        "deviation": null,
-        "reason": null
+        "actualDate": "2026-10-12",
+        "deviation": "提前 20 天开始",
+        "reason": "POP 数据集已就绪，PC 端 GPU（Colab T4）可用，提前开展基线训练与评估"
       },
       "isExample": true
     },
@@ -183,7 +189,9 @@
       "fallback": "若所有候选均不可行，回退至通用目标检测 demo + 性能基准测试，作为平台能力评估类毕业设计。",
       "notes": "本阶段输出是后续模型实验与系统开发的前置条件，必须形成正式决策记录。",
       "relatedExperiments": [],
-      "relatedDecisions": ["DEC-001"],
+      "relatedDecisions": [
+        "DEC-001"
+      ],
       "planAdjustment": {
         "plannedDate": "2026-12-16",
         "actualDate": null,
